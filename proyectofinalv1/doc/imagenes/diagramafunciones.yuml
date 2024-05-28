@@ -1,0 +1,39 @@
+// {type:class}
+// {direction:leftToRight}
+// {generate:true}
+
+[Parqueadero|-puestos:HashTable|+constructor(administrador:Administrador);+getAdministrador():Administrador;+getPuestos():HashTable;+getCapacidad():Capacidad;+getRegistros():RegistroVehiculo*;+agregarRegistro(Registro);+setAdministrador(Administrador);+parquearVehiculo(Posicion,Vehiculo,Fecha);+entregarVehiculo(Posicion,Fecha);+obtenerRegistroVehiculo(Vehiculo):RegistroVehiculo;+obtenerGanaciasDelDia(Fecha):double;+obtenerGananciasDelDia():double]
+
+[Capacidad|-filas:Entero;-columnas:Entero|+constructor(filas:Entero,columnas:Entero);+getFilas():Entero;+getColumnas:Entero]
+
+[Vehiculo|-placa:Texto;-modelo:Texto|+constructor(placa:Texto, modelo:Texto, propietario:Propietario, tipoVehiculo:TipoVehiculo);+getPlaca():Texto;+getModelo():Texto;+getPropietario():Propietario;+getTipoVehiculo():TipoVehiculo]
+
+[Persona|-nombre:Texto;-cedula:Texto|+constructor(nombre:Texto, cedula:Texto);+getNombre():Texto;+getCedula():Texto]
+
+[Propietario]
+
+[Posicion|i:Entero;j:Entero]
+
+[<<enum>>;TipoVehiculo|CARRO(tarifa);MOTOHIBRIDA(tarifa);MOTOCLASICA(tarifa)|+getTarifa():double;+verificar(double,Administrador);-setTarifa(double)]
+
+[Administrador||+constructor(nombre:Texto, cedula:Texto);+cambiarTarifa(Vehiculo, tarifa)]
+
+[RegistroVehiculo|-fechaIngreso:Fecha;-fechaSalida:Fecha|+constructor(fechaIngreso:Fecha, vehiculo:Vehiculo, posicion:Posicion);+getFechaIngreso():Fecha;+getFechaSalida():Fecha;+getPosicion():Posicion;+getVehiculo():Vehiculo;+setFechaSalida(Fecha);+calcularPago():double;-obtenerHorasEntre(Fecha,Fecha):int]
+
+
+// RELACIONES
+
+[Parqueadero]1-*>[Vehiculo]
+[Parqueadero]<>->[Capacidad]
+[Parqueadero]<>1-*>[RegistroVehiculo]
+[Parqueadero]<>1-1>[Administrador]
+[Parqueadero]-.->[Posicion]
+
+[RegistroVehiculo]->[Posicion]
+[RegistroVehiculo]->[Vehiculo]
+
+[Vehiculo]->[Propietario]
+[Vehiculo]->[<<enum>>;TipoVehiculo]
+
+[Administrador]-^[Persona]
+[Propietario]-^[Persona]

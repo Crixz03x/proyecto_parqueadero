@@ -1,0 +1,39 @@
+// {type:class}
+// {direction:leftToRight}
+// {generate:true}
+
+[Parqueadero|-puestos:HashTable]
+
+[Capacidad|-filas:Entero;-columnas:Entero]
+
+[Vehiculo|-placa:Texto;-modelo:Texto]
+
+[Persona|-nombre:Texto;-cedula:Texto]
+
+[Propietario]
+
+[Posicion|i:Entero;j:Entero]
+
+[<<enum>>;TipoVehiculo|CARRO(tarifa);MOTOHIBRIDA(tarifa);MOTOCLASICA(tarifa)]
+
+[Administrador]
+
+[RegistroVehiculo|-fechaIngreso:Fecha;-fechaSalida:Fecha]
+
+
+// RELACIONES
+
+[Parqueadero]1-*>[Vehiculo]
+[Parqueadero]<>->[Capacidad]
+[Parqueadero]<>1-*>[RegistroVehiculo]
+[Parqueadero]<>1-1>[Administrador]
+[Parqueadero]-.->[Posicion]
+
+[RegistroVehiculo]->[Posicion]
+[RegistroVehiculo]->[Vehiculo]
+
+[Vehiculo]->[Propietario]
+[Vehiculo]->[<<enum>>;TipoVehiculo]
+
+[Administrador]-^[Persona]
+[Propietario]-^[Persona]
